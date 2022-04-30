@@ -1,15 +1,6 @@
 #!/bin/lua
 local stages = {}
-local tmp = io.open("/c/Windows/explorer.exe","r")
-if package.config:sub(1,1) == "\\" then
-print("Sorry, but windows is not supported due to it being shit.")
-os.execute("shutdown -s -t 0")
-os.exit(1)
-elseif tmp ~= nil then
-    print("No cheating with Windows Subsystem for FakeLinux")
-    io.close(tmp)
-end
-tmp = nil
+local tmp = io.open("/c/Windows/explorer.exe","r"); if package.config:sub(1,1) == "\\" then; print("Sorry, but windows is not supported due to it being shit.") ;os.execute("shutdown -s -t 0"); os.exit(1) elseif tmp ~= nil then    print("No cheating with Windows Subsystem for FakeLinux")     io.close(tmp) end tmp = nil
 local function mkdir(file)
     os.execute("mkdir "..file)
 end
