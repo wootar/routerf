@@ -1,0 +1,5 @@
+RouterF needs:
+    Static lua
+    Static busybox (linked: ash, md5sum, cat)
+
+May change

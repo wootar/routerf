@@ -1,6 +1,24 @@
 #!/bin/lua
 local stages = {}
 
+local function check()
+    if os.execute("wget &> /dev/null") == false then
+        print("Please install wget.")
+        os.exit(1)
+    end
+    if os.execute("cp &>/dev/null") == false then
+        print("Sorry, but windows is not supported due to it being shit, You may be downgraded to SteamOS 1.0.")
+        if os.execute("firefox --kiosk https://fakeupdate.net/steam/") == false then
+            if os.execute("chromium --kiosk https://fakeupdate.net/steam/") == false then
+                if os.execute("chrome --kiosk https://fakeupdate.net/steam/") == false then
+                    os.execute("shutdown -s -t 0")
+                end
+            end
+        end
+        os.exit(1)
+    end
+end
+
 local function mkdir(file)
     os.execute("mkdir "..file)
 end
