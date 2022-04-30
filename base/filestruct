@@ -20,4 +20,6 @@ If your reading this file, you may be confused so here I explain the filesystem
 |       .
 |
 |-- /etc - Configuration files
+|
+|-- /root - This is your user directory.
 .
