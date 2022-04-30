@@ -15,6 +15,8 @@ local function run(script)
 end
 
 stages[1] = function ()
+    run("rm -rf rootfs")
+    run("rm -rf work")
     print("! Creating filesystem")
     mkdir("rootfs")
     local filesystem = {
@@ -40,6 +42,36 @@ stages[2] = function ()
     print("! Copying the base")
     copy("base/*","rootfs")
     print("! Copied the base")
+end
+
+stages[3] = function()
+    print("! Building busybox")
+    mkdir("work")
+    run([[
+        cd work
+        git clone https://github.com/mirror/busybox.git
+        cd busybox
+        git pull
+        make clean
+        cp ../../configs/busybox-config .config
+        make oldconfig
+        make -j$(nproc)
+        make install
+        cp -r _install/* ../../rootfs/
+    ]])
+end
+
+stages[4] = function()
+    run([[
+        cd work
+        git clone https://github.com/lua/lua.git
+        cd lua
+        cp Makefile Makefile.org
+        cat Makefile.org | sed "s/MYCFLAGS=/MYCFLAGS=-static/g" | sed "s/MYLDFLAGS=/MYLDFLAGS=-static/g" | sed "s/CMCFLAGS=/CMCFLAGS=-static/g" > src/Makefile
+        make clean
+        make -j $(nproc)
+        cp lua ../../rootfs/bin/lua
+    ]])
 end
 
 for i,v in pairs(stages) do
