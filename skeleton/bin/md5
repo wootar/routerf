@@ -1,0 +1,2 @@
+#!/bin/busybox ash
+busybox md5sum | busybox grep -o '^\S\+'

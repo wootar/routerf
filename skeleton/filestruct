@@ -1,0 +1,23 @@
+Hello!
+If your reading this file, you may be confused so here I explain the filesystem
+
+.
+|-- /bin - Contains user binaries and busybox
+|
+|-- /sbin - Contains root binaries
+|
+|-- /dev - Device files
+|
+|-- /sys - Another Device files folder
+|
+|-- /proc - Contains processes, so linux can keep track of them
+|
+|-- /http - The UI for HTTP
+|       |
+|       | -- /http/priv - Private files
+|       |
+|       | -- /http/www - Pubilc files
+|       .
+|
+|-- /etc - Configuration files
+.
