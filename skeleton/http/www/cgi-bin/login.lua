@@ -4,4 +4,6 @@ local function cat(file)
     return file_open:read("a")
 end
 
+print("Content-type: text/html")
+print("")
 cat("/http/priv/ui.html")
