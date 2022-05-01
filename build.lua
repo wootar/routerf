@@ -66,8 +66,8 @@ stages[4] = function()
         cd work
         git clone https://github.com/lua/lua.git
         cd lua
-        cp Makefile Makefile.org
-        cat Makefile.org | sed "s/MYCFLAGS=/MYCFLAGS=-static/g" | sed "s/MYLDFLAGS=/MYLDFLAGS=-static/g" | sed "s/CMCFLAGS=/CMCFLAGS=-static/g" > src/Makefile
+        cp Makefile Makefile.org || cp makefile Makefile.org
+        cat Makefile.org | sed "s/MYCFLAGS=/MYCFLAGS=-static/g" | sed "s/MYLDFLAGS=/MYLDFLAGS=-static/g" | sed "s/CMCFLAGS=/CMCFLAGS=-static/g" | sed "s/-DLUA_USE_READLINE//g" | sed "s/-lreadline//g" > makefile
         make clean
         make -j $(nproc)
         cp lua ../../rootfs/bin/lua
