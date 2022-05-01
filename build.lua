@@ -44,6 +44,17 @@ stages[2] = function ()
     print("! Copying the base")
     copy("base/*","rootfs")
     print("! Copied the base")
+    print("! Editing os-release")
+    local osrel = io.open("rootfs/etc/os-release","r")
+    local date = io.popen("date +%d-%m-%Y","r")
+    local work = osrel:read("a")
+    work = work:gsub("testing-date","testing-"..date:read("l"))
+    osrel:close()
+    local osrel_wri = io.open("rootfs/etc/os-release","w+")
+    osrel_wri:write(work)
+    osrel_wri:flush()
+    osrel_wri:close()
+    work = nil
 end
 
 stages[3] = function()

@@ -10,4 +10,12 @@ for i,v in tmp:gmatch("(%w+)=(%w+)") do
     vars[i] = v
 end
 
-os.execute("cat /http/priv/ui.html")
+local index = io.open("/http/priv/ui.html","r")
+
+local work = index:read("a")
+local mem = io.popen("busybox dmesg","r")
+work = work:gsub("<!--code-->","<p>"..mem:read("a").."</p>")
+print(work)
+index:close()
+work = nil
+mem:close()
