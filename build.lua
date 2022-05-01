@@ -10,8 +10,10 @@ end
 local function touch(file)
     os.execute("touch "..file)
 end
+
+
 local function run(script)
-    os.execute([[sh -c "]]..script..[["]])
+    return os.execute([[sh -c "]]..script..[["]])
 end
 
 stages[1] = function ()
@@ -47,7 +49,7 @@ end
 stages[3] = function()
     print("! Building busybox")
     mkdir("work")
-    run([[
+    local ret = run([[
         cd work
         git clone https://github.com/mirror/busybox.git
         cd busybox
@@ -59,10 +61,13 @@ stages[3] = function()
         make install
         cp -r _install/* ../../rootfs/
     ]])
+    if ret == false then
+        os.exit(1)
+    end
 end
 
 stages[4] = function()
-    run([[
+    local ret = run([[
         cd work
         git clone https://github.com/lua/lua.git
         cd lua
@@ -72,6 +77,9 @@ stages[4] = function()
         make -j $(nproc)
         cp lua ../../rootfs/bin/lua
     ]])
+    if ret == false then
+        os.exit(1)
+    end
 end
 
 for i,v in pairs(stages) do
